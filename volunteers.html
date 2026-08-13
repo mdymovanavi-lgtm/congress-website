@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Волонтёрам «Конгресс»: календарь событий с открытым набором, фотоотчёты с прошедших мероприятий и ответы на частые вопросы для временного персонала и волонтёров.">
+  <title>Волонтёрам — Конгресс</title>
+  <link rel="icon" type="image/svg+xml" href="assets/brand/logomark.svg">
+  <link rel="stylesheet" href="styles.css?v=9">
+</head>
+<body class="volunteers">
+
+  <header class="header header--volunteers" id="top">
+    <div class="shell header__inner">
+      <a href="index.html" class="header__brand" aria-label="Конгресс — на главную">
+        <img src="assets/brand/logo.svg" alt="Конгресс" width="140" height="25">
+      </a>
+      <p class="header__note">Базируемся в Санкт-Петербурге. Работаем по всему миру.</p>
+      <div class="header__actions">
+        <a href="tel:+78002223929" class="header__phone">+7 800 222 39 29</a>
+        <a href="mailto:info@congress.ru" class="header__phone">info@congress.ru</a>
+        <a class="btn btn--dark header__cta" href="https://reg.congress.ru/users/login/" target="_blank" rel="noopener">
+          Войти в личный кабинет
+          <img src="assets/brand/arrow-white.svg" alt="" class="btn__arrow">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ХИРО -->
+    <section class="hero hero--volunteers">
+      <div class="hero__media">
+        <img class="hero__image" src="assets/photo/volunteers/hero.jpg" alt="Волонтёры «Конгресс» на сцене ПМЭФ" loading="eager">
+        <div class="hero__content">
+          <h1 class="hero__display">
+            <span class="hero__line">Делай большие</span>
+            <span class="hero__line">события вместе</span>
+            <span class="hero__line">с нами</span>
+          </h1>
+          <p class="hero__sub">Присоединяйся к&nbsp;команде волонтёров и&nbsp;участвуй в&nbsp;организации крупнейших форумов и&nbsp;конференций.</p>
+          <a class="btn btn--pink btn--lg hero__cta" href="https://reg.congress.ru/users/registration/" target="_blank" rel="noopener">
+            Зарегистрироваться
+            <img src="assets/brand/arrow-white.svg" alt="" class="btn__arrow">
+          </a>
+        </div>
+      </div>
+      <nav class="hero__menu" aria-label="Быстрые ссылки">
+        <a href="#calendar">Календарь</a>
+        <a href="#faq">Вопрос-ответ</a>
+        <a href="#photos">Фото</a>
+        <a href="https://reg.congress.ru/users/login/" target="_blank" rel="noopener">Войти в ЛК</a>
+      </nav>
+    </section>
+
+    <!-- КАЛЕНДАРЬ СОБЫТИЙ -->
+    <section class="cal" id="calendar">
+      <div class="shell">
+        <h2 class="section-title reveal">Календарь <em>событий</em></h2>
+
+        <div data-calendar>
+          <div class="cal-feature reveal" data-cal-feature></div>
+          <p class="cal-rest-label reveal" data-cal-rest-label hidden>Дальше в этом году</p>
+          <div class="cal-list reveal" data-cal-list></div>
+        </div>
+
+        <p class="cal__empty" data-cal-empty hidden>Сейчас открытых наборов нет — загляните позже, актуальные мероприятия появятся здесь.</p>
+      </div>
+    </section>
+
+    <!-- ЧАСТЫЕ ВОПРОСЫ -->
+    <section class="svc-faq" id="faq">
+      <div class="shell">
+        <h2 class="section-title reveal">Частые вопросы</h2>
+        <div class="faq-cols reveal">
+          <div class="faq">
+            <details class="faq__item">
+              <summary>Как подать заявку на участие в организации мероприятий?</summary>
+              <p>Сначала <a href="https://reg.congress.ru/users/registration/" target="_blank" rel="noopener">зарегистрируйтесь</a> на сайте <a href="https://reg.congress.ru/users/registration/" target="_blank" rel="noopener">reg.congress.ru</a>. Для регистрации используйте браузер Google Chrome. Пройдите оба этапа: заполните контактную информацию, затем укажите паспортные данные после получения логина и пароля на электронный адрес, указанный при регистрации. Без паспортных данных аккаунт не активируется.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Я зарегистрировался на сайте congress.ru и поставил отметку о желании работать. Каковы мои дальнейшие действия?</summary>
+              <p>После окончания приёма заявок всем кандидатам направляется подробная информация о дальнейших действиях. Если информация вам ещё не поступила, значит она ещё согласуется и уточняется, либо приём заявок ещё не окончен.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Хочу поработать на ваших мероприятиях. Проводите ли вы что-то в ближайшее время?</summary>
+              <p>Вся актуальная информация о наборе временных сотрудников размещается на нашем сайте congress.ru в разделе «Волонтёрам» → «Календарь событий», в мобильном приложении Congress, а также в группе ВКонтакте vk.com/epicapec.</p>
+            </details>
+          </div>
+          <div class="faq">
+            <details class="faq__item">
+              <summary>Гарантирует ли регистрация на сайте congress.ru работу на ваших мероприятиях?</summary>
+              <p>Регистрация даёт доступ к информации о наборе, но не гарантирует работу на мероприятии. Все кандидаты проходят собеседование — решение о привлечении принимается по его итогам.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Я заявил о своём желании участвовать в мероприятии. Теперь эта графа не отображается. Почему?</summary>
+              <p>Набор на это мероприятие уже закрыт, поэтому графа не отображается в <a href="https://reg.congress.ru/users/login/" target="_blank" rel="noopener">личном кабинете</a>. Если вы своевременно установили отметку, заявка принята — дальнейшую информацию пришлём по этому мероприятию.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Во вкладке «Работа» нет мероприятия, на котором я хочу поработать. Что делать?</summary>
+              <p>Если в <a href="https://reg.congress.ru/users/login/" target="_blank" rel="noopener">личном кабинете</a> не отображается нужное мероприятие, набор на него не ведётся — закрыт или ещё не открыт.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ФОТООТЧЕТЫ -->
+    <section class="projects" id="photos">
+      <div class="shell">
+        <h2 class="section-title reveal">Фотоотчёты</h2>
+        <div class="projects__grid">
+          <a class="project reveal project--wide" href="https://congress.ru/volunteers/photo-reports/1290/" target="_blank" rel="noopener">
+            <img class="project__img--top" src="assets/photo/volunteers/pmuf-2026.jpg" alt="ПМЮФ 2026" loading="lazy">
+            <div class="project__body">
+              <h3 class="project__title">ПМЮФ 2026</h3>
+              <p class="project__meta">24–26 июня 2026 · Санкт-Петербург</p>
+            </div>
+          </a>
+          <a class="project reveal" href="https://congress.ru/volunteers/photo-reports/1289/" target="_blank" rel="noopener">
+            <img src="assets/photo/volunteers/russia-asean.jpg" alt="Россия — АСЕАН" loading="lazy">
+            <div class="project__body">
+              <h3 class="project__title">Россия — АСЕАН</h3>
+              <p class="project__meta">17–19 июня 2026 · Казань</p>
+            </div>
+          </a>
+          <a class="project reveal" href="https://congress.ru/volunteers/photo-reports/1288/" target="_blank" rel="noopener">
+            <img src="assets/photo/volunteers/pmef-2026.jpg" alt="ПМЭФ 2026" loading="lazy">
+            <div class="project__body">
+              <h3 class="project__title">ПМЭФ 2026</h3>
+              <p class="project__meta">3–6 июня 2026 · Санкт-Петербург</p>
+            </div>
+          </a>
+          <a class="project reveal" href="https://congress.ru/volunteers/photo-reports/1287/" target="_blank" rel="noopener">
+            <img src="assets/photo/volunteers/kif-2026.jpg" alt="КИФ 2026" loading="lazy">
+            <div class="project__body">
+              <h3 class="project__title">КИФ 2026</h3>
+              <p class="project__meta">28–30 апреля 2026 · Минеральные Воды</p>
+            </div>
+          </a>
+          <a class="project reveal" href="https://congress.ru/volunteers/photo-reports/" target="_blank" rel="noopener">
+            <img src="assets/photo/volunteers/mtlf-2026.jpg" alt="МТЛФ 2026" loading="lazy">
+            <div class="project__body">
+              <h3 class="project__title">МТЛФ 2026</h3>
+              <p class="project__meta">1–3 апреля 2026 · Санкт-Петербург</p>
+            </div>
+          </a>
+        </div>
+        <a class="link-more-projects reveal" href="https://congress.ru/volunteers/photo-reports/" target="_blank" rel="noopener">Посмотреть все фотоотчёты →</a>
+      </div>
+    </section>
+
+    <!-- СОЦСЕТИ -->
+    <section class="vol-social" id="social">
+      <div class="shell">
+        <h2 class="section-title reveal">Соцсети <em>для волонтёров</em></h2>
+        <p class="vol-social__lead reveal">Подписывайся — здесь первыми публикуем новости о наборах, дедлайнах и мероприятиях.</p>
+        <div class="vol-social__grid reveal">
+          <a class="vol-social__card vol-social__card--vk" href="https://vk.com/epicapec" target="_blank" rel="noopener">
+            <span class="vol-social__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.587-1.496c.598-.19 1.366 1.258 2.182 1.814.616.422 1.084.33 1.084.33l2.181-.03s1.142-.071.6-.964c-.044-.073-.314-.661-1.618-1.869-1.366-1.265-1.184-.529.462-1.622.998-.831 1.396-1.338 1.271-1.554-.118-.204-.847-.15-.847-.15l-2.341.015s-.173-.024-.301.053c-.124.075-.203.249-.203.249s-.364.966-.847 1.787c-1.02 1.684-1.429 1.773-1.597 1.669-.389-.241-.292-.969-.292-1.488 0-1.618.244-2.291-.476-2.464-.238-.057-.413-.095-1.023-.101-.783-.008-1.445.003-1.819.164-.249.108-.441.349-.324.363.145.018.474.088.648.323.224.302.216.98.216.98s.13 1.925-.302 2.164c-.297.163-.703-.17-1.575-1.691-.446-.771-.783-1.624-.783-1.624s-.065-.161-.181-.248c-.141-.105-.338-.138-.338-.138l-2.229.014s-.335.01-.458.156c-.11.131-.008.402-.008.402s1.737 4.091 3.702 6.156c1.802 1.894 3.853 1.771 3.853 1.771h.925z"/></svg>
+            </span>
+            <span class="vol-social__name">ВКонтакте</span>
+            <span class="vol-social__hint">Анонсы наборов, фотоотчёты и ответы на вопросы в сообществе</span>
+            <span class="vol-social__action">Перейти в группу<img src="assets/brand/arrow-red.svg" alt="" width="14" height="14"></span>
+          </a>
+          <a class="vol-social__card vol-social__card--tg" href="https://t.me/congress_live" target="_blank" rel="noopener">
+            <span class="vol-social__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+            </span>
+            <span class="vol-social__name">Telegram</span>
+            <span class="vol-social__hint">Быстрые новости и напоминания о старте наборов</span>
+            <span class="vol-social__action">Перейти в канал<img src="assets/brand/arrow-red.svg" alt="" width="14" height="14"></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer__inner">
+      <div class="footer__col footer__col--brand">
+        <img src="assets/brand/logo-white.svg" alt="Конгресс" class="footer__logo" width="180" height="60">
+      </div>
+      <div class="footer__col">
+        <p class="footer__heading">Навигация</p>
+        <nav class="footer__nav" aria-label="Навигация в подвале">
+          <a href="about.html">О нас</a>
+          <a href="index.html#services">Услуги</a>
+          <a href="index.html#projects">Проекты</a>
+          <a href="volunteers.html" aria-current="page">Волонтёрам</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <p class="footer__heading">Контакты</p>
+        <ul class="footer__contacts" role="list">
+          <li><a href="mailto:office@congress.ru">office@congress.ru</a></li>
+          <li><a href="tel:+78002223929">+7 800 222 39 29</a></li>
+          <li><p>Санкт-Петербург, Средний пр-кт В.О., 88, лит. А</p></li>
+        </ul>
+      </div>
+      <div class="footer__col footer__col--legal">
+        <p>ООО «Конгресс»</p>
+        <p>ОГРН 1127847085190 · ИНН 7805578911</p>
+        <a href="#">Политика обработки персональных данных</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- МОДАЛ «СВЯЗАТЬСЯ» -->
+  <div class="modal" id="contactModal" hidden>
+    <div class="modal__backdrop js-close-contact"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+      <button class="modal__close js-close-contact" type="button" aria-label="Закрыть окно">✕</button>
+      <h2 class="modal__title" id="contactTitle">Есть вопрос или планируете мероприятие?</h2>
+      <p class="modal__sub">Оставьте контакты, и мы свяжемся с вами.</p>
+      <a class="modal__volunteer" href="volunteers.html">
+        Волонтёрам — сюда
+        <img src="assets/brand/arrow-red.svg" alt="" class="btn__arrow">
+      </a>
+      <form class="modal__form" id="contactForm" novalidate>
+        <label class="field">
+          <span class="field__label">Имя</span>
+          <input type="text" name="name" required autocomplete="name" placeholder="Как к вам обращаться">
+        </label>
+        <label class="field">
+          <span class="field__label">Телефон</span>
+          <input type="tel" name="phone" required autocomplete="tel" placeholder="+7 ___ ___-__-__">
+        </label>
+        <label class="field">
+          <span class="field__label">Email</span>
+          <input type="email" name="email" autocomplete="email" placeholder="name@company.ru">
+        </label>
+        <label class="field">
+          <span class="field__label">Комментарий</span>
+          <textarea name="message" rows="3" placeholder="Формат, даты, количество участников…"></textarea>
+        </label>
+        <label class="form-consent">
+          <input type="checkbox" name="consent" required>
+          <span>Я даю согласие на <a href="#">обработку персональных данных</a></span>
+        </label>
+        <button type="submit" class="btn btn--red btn--lg modal__submit">Отправить</button>
+        <p class="form-success" hidden>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

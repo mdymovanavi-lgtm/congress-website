@@ -1,0 +1,123 @@
+/* ============================================================
+   Шапка — типографика и адаптив (mobile / tablet / desktop)
+   Подключается после styles.css
+   ============================================================ */
+
+/* ── Стандартная шапка (about, services, projects) ── */
+.header--standard .header__nav a,
+.header--standard .header__nav a[aria-current="page"] {
+  font-family: var(--font-display);
+  font-size: var(--header-nav-size);
+  font-weight: var(--header-nav-weight);
+  line-height: 1;
+  letter-spacing: var(--header-nav-spacing);
+  text-transform: uppercase;
+  padding: var(--space-2) 2px;
+}
+
+.header--standard .header__phone {
+  font-family: var(--font-display);
+  font-size: var(--header-phone-size);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.header--standard .header__cta.btn {
+  font-size: var(--header-cta-size);
+  min-height: 40px;
+  padding: var(--space-2) var(--space-5);
+}
+
+/* ── Домашняя шапка (index) ── */
+.header--home .header__inner {
+  gap: var(--space-4);
+}
+
+.header--home .header__brand img {
+  width: clamp(110px, 30vw, 150px);
+}
+
+.header--home .header__phone {
+  font-size: clamp(13px, 3.2vw, var(--header-phone-size));
+}
+
+/* ── Mobile (< 768px) ── */
+@media (max-width: 767px) {
+  .header {
+    height: auto;
+    min-height: var(--header-h);
+  }
+
+  .header__inner {
+    gap: var(--space-3);
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+
+  .header__brand {
+    flex-shrink: 0;
+  }
+
+  .header__brand img {
+    width: clamp(108px, 32vw, 130px);
+  }
+
+  .header__actions {
+    gap: var(--space-2);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .header--home .header__note {
+    display: none;
+  }
+
+  .header--home .header__phone {
+    display: inline;
+    font-size: 13px;
+  }
+
+  .header--standard .header__cta.btn {
+    display: none;
+  }
+}
+
+/* ── Tablet (768px – 899px) ── */
+@media (min-width: 768px) and (max-width: 899px) {
+  .header__inner {
+    gap: var(--space-4);
+  }
+
+  .header--home .header__cta.btn,
+  .header--volunteers .header__cta.btn {
+    display: inline-flex;
+    min-height: 44px;
+    font-size: 13px;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .header--home .header__phone,
+  .header--volunteers .header__phone {
+    display: inline;
+    font-size: 13px;
+  }
+}
+
+/* ── Desktop nav (≥ 900px) ── */
+@media (min-width: 900px) {
+  .header--standard .header__nav {
+    gap: clamp(var(--space-4), 2.5vw, 44px);
+  }
+
+  .header--standard .header__inner {
+    gap: var(--space-6);
+  }
+}
+
+/* ── Wide desktop (≥ 1150px) ── */
+@media (min-width: 1150px) {
+  .header--home .header__note {
+    display: block;
+    white-space: nowrap;
+  }
+}
