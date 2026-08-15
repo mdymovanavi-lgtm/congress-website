@@ -6,3 +6,18 @@ Desktop.ini
 .env.*
 !.env.example
 node_modules/
+dist/
+
+# Local Netlify folder
+.netlify
+
+# IDE / dev workspace (not needed for deployment)
+.cursor/
+tools/
+__pycache__/
+*.pyc
+
+# Photo source archive and inventory (lives in ../_site-workspace/)
+фото-сайта/
+фото-сайта*.xlsx
+_archive/

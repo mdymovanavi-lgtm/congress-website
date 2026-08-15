@@ -62,12 +62,22 @@
   /* ---------- Модал «Связаться» ---------- */
   var modal = document.getElementById('contactModal');
   var lastFocus = null;
+  var modalFocusables = [];
+
+  function getModalFocusables() {
+    if (!modal) return [];
+    return Array.prototype.slice.call(
+      modal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])')
+    ).filter(function (el) { return el.offsetParent !== null || el === modal.querySelector('.modal__close'); });
+  }
+
   function openModal() {
     if (!modal) return;
     lastFocus = document.activeElement;
     modal.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
-    var first = modal.querySelector('input, button.modal__close');
+    modalFocusables = getModalFocusables();
+    var first = modalFocusables[0];
     if (first) first.focus();
   }
   function closeModal() {
@@ -82,6 +92,19 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) closeModal();
+    if (e.key === 'Tab' && modal && !modal.hasAttribute('hidden')) {
+      modalFocusables = getModalFocusables();
+      if (modalFocusables.length < 2) return;
+      var first = modalFocusables[0];
+      var last = modalFocusables[modalFocusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 
   /* ---------- Форма ---------- */
@@ -92,13 +115,32 @@
       if (!form.reportValidity()) return;
       var success = form.querySelector('.form-success');
       var submit = form.querySelector('.modal__submit');
+      var errorEl = form.querySelector('.form-error');
       if (submit) { submit.disabled = true; submit.textContent = 'Отправляем…'; }
-      /* Здесь подключается бэкенд/CRM. Пока — имитация отправки. */
-      setTimeout(function () {
+      if (errorEl) errorEl.hidden = true;
+
+      var body = new FormData(form);
+      if (!body.get('form-name')) body.append('form-name', 'contact');
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: body
+      }).then(function (res) {
+        if (!res.ok) throw new Error('submit failed');
         if (success) success.removeAttribute('hidden');
         if (submit) submit.style.display = 'none';
-        form.querySelectorAll('.field, .form-consent').forEach(function (el) { el.style.display = 'none'; });
-      }, 600);
+        form.querySelectorAll('.field, .form-consent, .visually-hidden').forEach(function (el) { el.style.display = 'none'; });
+      }).catch(function () {
+        if (submit) { submit.disabled = false; submit.textContent = 'Отправить'; }
+        if (!errorEl) {
+          errorEl = document.createElement('p');
+          errorEl.className = 'form-error';
+          errorEl.textContent = 'Не удалось отправить. Попробуйте позже или напишите на office@congress.ru';
+          form.appendChild(errorEl);
+        }
+        errorEl.hidden = false;
+      });
     });
   }
 

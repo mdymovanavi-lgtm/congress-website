@@ -6,12 +6,13 @@
   <meta name="description" content="Набор волонтёров на Форум объединённых культур 2026, 24–26 сентября 2026, Санкт-Петербург. Обучение, форма, питание, благодарственные письма — как принять участие.">
   <title>Форум объединённых культур — набор волонтёров — Конгресс</title>
   <link rel="icon" type="image/svg+xml" href="../assets/brand/logomark.svg">
-  <link rel="stylesheet" href="../styles.css?v=9">
-  <link rel="stylesheet" href="../header.css?v=1">
+  <link rel="stylesheet" href="../styles.css?v=12">
+  <link rel="stylesheet" href="../header.css?v=2">
 </head>
 <body class="volunteers">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
 
-  <header class="header header--standard" id="top">
+<header class="header header--standard" id="top">
     <div class="shell header__inner">
       <a href="../index.html" class="header__brand" aria-label="Конгресс — на главную">
         <img src="../assets/brand/logo.svg" alt="Конгресс" width="140" height="25">
@@ -44,7 +45,7 @@
     </nav>
   </div>
 
-  <main>
+  <main id="main">
 
     <!-- ХИРО -->
     <section class="svc-hero svc-hero--compact svc-hero--placeholder">
@@ -147,6 +148,7 @@
     <div class="shell footer__inner">
       <div class="footer__col footer__col--brand">
         <img src="../assets/brand/logo-white.svg" alt="Конгресс" class="footer__logo" width="180" height="60">
+        <a class="footer__download btn btn--white" href="../assets/docs/Congress_Ru_Presentation.pdf" download>Скачать презентацию</a>
       </div>
       <div class="footer__col">
         <p class="footer__heading">Навигация</p>
@@ -168,7 +170,9 @@
       <div class="footer__col footer__col--legal">
         <p>ООО «Конгресс»</p>
         <p>ОГРН 1127847085190 · ИНН 7805578911</p>
-        <a href="#">Политика обработки персональных данных</a>
+        <a href="../privacy.html">Политика обработки персональных данных</a>
+        <a href="../consent.html">Согласие на обработку персональных данных</a>
+        <a href="../consent-volunteers.html">Согласие на обработку персональных данных для волонтёров</a>
       </div>
     </div>
   </footer>
@@ -184,7 +188,9 @@
         Волонтёрам — сюда
         <img src="../assets/brand/arrow-red.svg" alt="" class="btn__arrow">
       </a>
-      <form class="modal__form" id="contactForm" novalidate>
+      <form class="modal__form" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="contact">
+        <p class="visually-hidden"><label>Не заполняйте: <input name="bot-field"></label></p>
         <label class="field">
           <span class="field__label">Имя</span>
           <input type="text" name="name" required autocomplete="name" placeholder="Как к вам обращаться">
@@ -203,7 +209,7 @@
         </label>
         <label class="form-consent">
           <input type="checkbox" name="consent" required>
-          <span>Я даю согласие на <a href="#">обработку персональных данных</a></span>
+          <span>Нажимая на кнопку «отправить», я даю <a href="../consent.html">Согласие</a> ООО «Конгресс» на обработку моих персональных данных в соответствии с <a href="../privacy.html">Политикой</a>.</span>
         </label>
         <button type="submit" class="btn btn--red btn--lg modal__submit">Отправить</button>
         <p class="form-success" hidden>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
@@ -211,6 +217,6 @@
     </div>
   </div>
 
-  <script src="../script.js"></script>
+  <script src="../script.js?v=3"></script>
 </body>
 </html>
