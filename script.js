@@ -446,13 +446,46 @@
   var reveals = document.querySelectorAll('.reveal');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Фоновое видео: не проигрываем при reduced motion, иначе замедляем */
+  /* Фоновое видео: постер сразу, ролик после отрисовки; на медленной сети — только постер */
   var heroVideo = document.querySelector('.hero__video');
-  if (heroVideo && reduced) { heroVideo.removeAttribute('autoplay'); heroVideo.pause(); }
-  if (heroVideo && !reduced) {
+  function shouldLoadHeroVideo() {
+    if (!heroVideo || reduced) return false;
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (conn) {
+      if (conn.saveData) return false;
+      if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g') return false;
+    }
+    return true;
+  }
+  function loadHeroVideo() {
+    if (!shouldLoadHeroVideo() || heroVideo.dataset.loaded) return;
+    var src = heroVideo.getAttribute('data-src');
+    if (!src) return;
+    heroVideo.dataset.loaded = '1';
+    var source = document.createElement('source');
+    source.src = src;
+    source.type = 'video/mp4';
+    heroVideo.appendChild(source);
     heroVideo.playbackRate = 0.5;
     heroVideo.addEventListener('play', function () { heroVideo.playbackRate = 0.5; });
-    heroVideo.addEventListener('loadedmetadata', function () { heroVideo.playbackRate = 0.5; });
+    heroVideo.addEventListener('loadeddata', function () {
+      heroVideo.playbackRate = 0.5;
+      var playPromise = heroVideo.play();
+      if (playPromise && playPromise.catch) playPromise.catch(function () {});
+    });
+    heroVideo.load();
+  }
+  if (heroVideo && shouldLoadHeroVideo()) {
+    var startHeroVideo = function () {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadHeroVideo, { timeout: 1800 });
+      } else {
+        setTimeout(loadHeroVideo, 250);
+      }
+    };
+    requestAnimationFrame(function () {
+      requestAnimationFrame(startHeroVideo);
+    });
   }
 
   /* ---------- Счётчики в блоке цифр ---------- */
