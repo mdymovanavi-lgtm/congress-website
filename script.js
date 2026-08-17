@@ -1,52 +1,35 @@
 (function () {
   'use strict';
 
-  /* ---------- Единый кегль стандартной шапки ---------- */
-  var standardHeader = document.querySelector('.header--standard');
-  if (standardHeader) {
-    standardHeader.querySelectorAll('.header__nav a').forEach(function (link) {
-      link.style.setProperty('font-size', '14px', 'important');
-      link.style.setProperty('font-weight', '400', 'important');
-      link.style.setProperty('line-height', '1', 'important');
-      link.style.setProperty('letter-spacing', '0.06em', 'important');
-    });
-    var headerPhone = standardHeader.querySelector('.header__phone');
-    if (headerPhone) {
-      headerPhone.style.setProperty('font-size', '14px', 'important');
-      headerPhone.style.setProperty('font-weight', '700', 'important');
-    }
-    var headerCta = standardHeader.querySelector('.header__cta');
-    if (headerCta) {
-      headerCta.style.setProperty('font-size', '14px', 'important');
-      headerCta.style.setProperty('min-height', '40px', 'important');
-      headerCta.style.setProperty('padding', '8px 20px', 'important');
-    }
+  /* ---------- Предзагрузка внутренних страниц (только десктоп с мышью) ---------- */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var prefetched = Object.create(null);
+    document.addEventListener('mouseover', function (e) {
+      var a = e.target.closest('a[href]');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      if (/^(mailto:|tel:|javascript:)/i.test(href)) return;
+      if (/\.(pdf|jpe?g|png|webp|zip|mp4)(\?|#|$)/i.test(href)) return;
+      var url;
+      try { url = new URL(href, location.href); } catch (err) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname === location.pathname && url.hash === location.hash) return;
+      if (prefetched[url.href]) return;
+      prefetched[url.href] = 1;
+      var link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = url.href;
+      document.head.appendChild(link);
+    }, true);
   }
-
-  /* ---------- Предзагрузка внутренних страниц по наведению ---------- */
-  document.addEventListener('pointerover', function (e) {
-    var a = e.target.closest('a[href]');
-    if (!a) return;
-    var href = a.getAttribute('href');
-    if (!href || href.charAt(0) === '#') return;
-    if (/^(mailto:|tel:|javascript:)/i.test(href)) return;
-    if (/\.(pdf|jpe?g|png|webp|zip|mp4)(\?|#|$)/i.test(href)) return;
-    var url;
-    try { url = new URL(href, location.href); } catch (err) { return; }
-    if (url.origin !== location.origin) return;
-    if (url.pathname === location.pathname && url.hash === location.hash) return;
-    if (document.querySelector('link[rel="prefetch"][href="' + url.href + '"]')) return;
-    var link = document.createElement('link');
-    link.rel = 'prefetch';
-    link.href = url.href;
-    document.head.appendChild(link);
-  }, true);
 
   /* ---------- Мобильное меню ---------- */
   var burger = document.querySelector('.burger');
   var mobileMenu = document.querySelector('.mobile-menu');
   if (burger && mobileMenu) {
-    burger.addEventListener('click', function () {
+    burger.addEventListener('pointerup', function (e) {
+      e.preventDefault();
       var open = mobileMenu.hasAttribute('hidden');
       if (open) { mobileMenu.removeAttribute('hidden'); } else { mobileMenu.setAttribute('hidden', ''); }
       burger.classList.toggle('is-open', open);
@@ -105,10 +88,17 @@
     document.body.style.overflow = '';
     if (lastFocus) lastFocus.focus();
   }
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('.js-open-contact')) openModal();
-    if (e.target.closest('.js-close-contact')) closeModal();
-  });
+  function handleContactAction(e) {
+    if (e.target.closest('.js-open-contact')) {
+      e.preventDefault();
+      openModal();
+    }
+    if (e.target.closest('.js-close-contact')) {
+      e.preventDefault();
+      closeModal();
+    }
+  }
+  document.addEventListener('pointerup', handleContactAction);
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) closeModal();
     if (e.key === 'Tab' && modal && !modal.hasAttribute('hidden')) {
@@ -217,9 +207,45 @@
   if (geoPin && geoDots.length) {
     var geoMarker = geoPin.querySelector('.geo__pin-marker');
     var cityListItems = document.querySelectorAll('.geo__city-col li[data-city]');
+    var geoSection = geoPin.closest('.geo');
     var geoIndex = 0;
     var geoTravelMs = 780;
     var geoBounceMs = 360;
+    var geoActive = true;
+    var geoRunId = 0;
+
+    function geoIsLive() {
+      return geoActive && !document.hidden;
+    }
+
+    function stopGeo() {
+      geoActive = false;
+      geoRunId++;
+    }
+
+    function startGeo() {
+      if (geoActive) return;
+      geoActive = true;
+      geoRunId++;
+      var runId = geoRunId;
+      playAtCity(geoIndex, function (peakLift) {
+        if (runId === geoRunId) goToNextCity(peakLift);
+      });
+    }
+
+    if (geoSection && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting && !document.hidden) startGeo();
+        else stopGeo();
+      }, { threshold: 0.08 }).observe(geoSection);
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stopGeo();
+      else if (geoSection) {
+        var rect = geoSection.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) startGeo();
+      }
+    });
 
     function parseDotPos(dot) {
       return {
@@ -255,8 +281,10 @@
       var start = null;
       var h = markerHeight();
       var duration = stopAtPeak ? geoBounceMs * 0.52 : geoBounceMs;
+      var runId = geoRunId;
 
       function frame(ts) {
+        if (!geoIsLive() || runId !== geoRunId) return;
         if (!start) start = ts;
         var progress = Math.min((ts - start) / duration, 1);
         var phase = stopAtPeak ? progress * 0.5 : progress;
@@ -291,8 +319,10 @@
       var to = parseDotPos(geoDots[toIdx]);
       var arcHeight = 8;
       var start = null;
+      var runId = geoRunId;
 
       function frame(ts) {
+        if (!geoIsLive() || runId !== geoRunId) return;
         if (!start) start = ts;
         var t = Math.min((ts - start) / geoTravelMs, 1);
         var ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
@@ -346,9 +376,18 @@
     setPinPos(startPos.left, startPos.top);
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      stopGeo();
       highlightCity(geoDots[0]);
     } else {
-      playAtCity(0, goToNextCity);
+      var geoVisibleNow = !geoSection || (function () {
+        var rect = geoSection.getBoundingClientRect();
+        return rect.top < window.innerHeight && rect.bottom > 0;
+      }());
+      if (geoVisibleNow) {
+        playAtCity(0, goToNextCity);
+      } else {
+        stopGeo();
+      }
     }
   }
 
