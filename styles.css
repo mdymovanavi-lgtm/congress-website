@@ -2382,6 +2382,7 @@ p { margin: 0; }
     overflow-wrap: anywhere;
   }
   .clients__heading br { display: none; }
+  .geo__cities { display: none; }
   .geo__body { gap: var(--space-8); }
   .geo__map { min-width: 0; }
   .value {

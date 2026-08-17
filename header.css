@@ -41,6 +41,10 @@
   font-size: clamp(13px, 3.2vw, var(--header-phone-size));
 }
 
+.header--home a.header__mail {
+  display: none;
+}
+
 /* ── Mobile (< 768px) ── */
 @media (max-width: 767px) {
   .header {
@@ -72,9 +76,21 @@
     display: none;
   }
 
+  .header--home .header__brand img {
+    width: clamp(120px, 13vw, 150px);
+  }
+
   .header--home .header__phone {
     display: inline;
-    font-size: 13px;
+    font-size: var(--header-phone-size);
+  }
+
+  .header--home a.header__mail {
+    display: inline;
+  }
+
+  .header--home .header__actions {
+    gap: 20px;
   }
 
   .header--standard .header__cta.btn {
