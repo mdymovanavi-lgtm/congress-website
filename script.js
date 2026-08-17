@@ -23,6 +23,25 @@
     }
   }
 
+  /* ---------- Предзагрузка внутренних страниц по наведению ---------- */
+  document.addEventListener('pointerover', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (!href || href.charAt(0) === '#') return;
+    if (/^(mailto:|tel:|javascript:)/i.test(href)) return;
+    if (/\.(pdf|jpe?g|png|webp|zip|mp4)(\?|#|$)/i.test(href)) return;
+    var url;
+    try { url = new URL(href, location.href); } catch (err) { return; }
+    if (url.origin !== location.origin) return;
+    if (url.pathname === location.pathname && url.hash === location.hash) return;
+    if (document.querySelector('link[rel="prefetch"][href="' + url.href + '"]')) return;
+    var link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = url.href;
+    document.head.appendChild(link);
+  }, true);
+
   /* ---------- Мобильное меню ---------- */
   var burger = document.querySelector('.burger');
   var mobileMenu = document.querySelector('.mobile-menu');
@@ -179,6 +198,17 @@
       });
     }, { rootMargin: '-30% 0px -60% 0px' });
     svcSections.forEach(function (s) { spy.observe(s); });
+    svcLinks.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href');
+        if (!id || id.charAt(0) !== '#') return;
+        var target = document.getElementById(id.slice(1));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'auto', block: 'start' });
+        if (history.replaceState) history.replaceState(null, '', id);
+      });
+    });
   }
 
   /* ---------- Карта: logomark прыгает по городам ---------- */
