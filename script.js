@@ -519,12 +519,15 @@
   var heroVideo = document.querySelector('.hero__video');
   function shouldLoadHeroVideo() {
     if (!heroVideo || reduced) return false;
+    if (window.matchMedia('(max-width: 899px)').matches) return false;
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return false;
     var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (conn) {
       if (conn.saveData) return false;
       if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g') return false;
+      if (conn.effectiveType === '4g' && typeof conn.downlink === 'number' && conn.downlink < 2.5) return false;
     }
-    return true;
+    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   }
   function loadHeroVideo() {
     if (!shouldLoadHeroVideo() || heroVideo.dataset.loaded) return;
