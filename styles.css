@@ -549,10 +549,11 @@ p { margin: 0; }
   border: none;
   border-bottom: 1px solid var(--border);
   text-decoration: none;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-weight: 400;
   font-size: clamp(14px, 1.5vw, 21px);
-  line-height: 1.05;
+  line-height: 1;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   text-align: left;
   color: var(--ink);
