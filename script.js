@@ -396,8 +396,8 @@
     { title: 'ПМЭФ-2026', start: '2026-06-03', end: '2026-06-06', city: 'Санкт-Петербург', dates: '3–6 июня 2026', status: 'open', link: 'https://congress.ru', img: 'assets/photo/projects/pmef.webp', desc: 'Подать заявку на участие в проекте в качестве волонтёра можно до 24 марта 2026 года.' },
     { title: 'ПМЮФ-2026', start: '2026-06-24', end: '2026-06-26', city: 'Санкт-Петербург', dates: '24–26 июня 2026', status: 'open', link: 'https://congress.ru', img: null, desc: 'Подать заявку на участие в проекте в качестве волонтёра можно до 3 мая 2026 года.' },
     { title: 'ВЭФ-2026', start: '2026-09-01', end: '2026-09-04', city: 'Владивосток', dates: '1–4 сентября 2026', status: 'open', link: 'calendar/vef-2026.html', img: 'assets/photo/projects/vef.webp', desc: 'Подать заявку на участие в проекте в качестве волонтёра можно до 15 мая 2026 года.' },
-    { title: 'Форум объединённых культур', start: '2026-09-24', end: '2026-09-26', city: 'Санкт-Петербург', dates: '24–26 сентября 2026', status: 'open', link: 'calendar/fok-2026.html', img: null, desc: 'Подать заявку на участие в проекте в качестве волонтёра можно до 23 июля 2026 года.' },
-    { title: 'РЭН-2026', start: '2026-10-14', end: '2026-10-16', city: 'Москва', dates: '14–16 октября 2026', status: 'open', link: 'calendar/ren-2026.html', img: null, desc: 'Подать заявку на участие в проекте в качестве волонтёра можно ближе к началу набора.' },
+    { title: 'Форум объединённых культур', start: '2026-09-24', end: '2026-09-26', city: 'Санкт-Петербург', dates: '24–26 сентября 2026', status: 'open', link: 'calendar/fok-2026.html', img: 'assets/photo/volunteers/fok-2026-hero.jpg', desc: 'Подать заявку на участие в проекте в качестве волонтёра можно до 23 июля 2026 года.' },
+    { title: 'РЭН-2026', start: '2026-10-14', end: '2026-10-16', city: 'Москва', dates: '14–16 октября 2026', status: 'open', link: 'calendar/ren-2026.html', img: 'assets/photo/volunteers/ren-2026-hero.jpg', desc: 'Подать заявку на участие в проекте в качестве волонтёра можно ближе к началу набора.' },
     { title: 'КМУ-2026', start: '2026-11-25', end: '2026-11-27', city: 'Сириус', dates: '25–27 ноября 2026', status: 'open', link: 'calendar/kmu-2026.html', img: null, desc: 'Подать заявку на участие в проекте в качестве волонтёра можно ближе к началу набора.' }
   ];
 
@@ -487,7 +487,7 @@
               '</span>' +
               '<span class="cal-item__chevron" aria-hidden="true"></span>' +
             '</button>' +
-            '<div class="cal-item__panel" hidden>' + fullCardMarkup(ev, { showTitle: false, hideCity: true }) + '</div>';
+            '<div class="cal-item__panel" hidden>' + fullCardMarkup(ev, { showTitle: false, hideCity: true, hideStatus: true }) + '</div>';
           listEl.appendChild(item);
         });
 
@@ -515,19 +515,16 @@
   var reveals = document.querySelectorAll('.reveal');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Фоновое видео: постер сразу, ролик после отрисовки; на медленной сети — только постер */
+  /* Фоновое видео: постер сразу, ролик после отрисовки; при плохой сети — только постер */
   var heroVideo = document.querySelector('.hero__video');
   function shouldLoadHeroVideo() {
     if (!heroVideo || reduced) return false;
-    if (window.matchMedia('(max-width: 899px)').matches) return false;
-    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return false;
     var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    if (conn) {
-      if (conn.saveData) return false;
-      if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g') return false;
-      if (conn.effectiveType === '4g' && typeof conn.downlink === 'number' && conn.downlink < 2.5) return false;
-    }
-    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!conn) return true;
+    if (conn.saveData) return false;
+    if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g') return false;
+    if (conn.effectiveType === '4g' && typeof conn.downlink === 'number' && conn.downlink < 2.5) return false;
+    return true;
   }
   function loadHeroVideo() {
     if (!shouldLoadHeroVideo() || heroVideo.dataset.loaded) return;
